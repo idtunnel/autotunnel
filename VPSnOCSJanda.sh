@@ -35,19 +35,7 @@ cd
 
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 : '
-# check registered ip
-wget -q -O daftarip http://188.166.215.119:85/ocs/ip.txt
-if ! grep -w -q $MYIP daftarip; then
-	echo "Sorry, only registered IPs can use this script!"
-	if [[ $vps = "vps" ]]; then
-		echo "Powered by JANDA"
-	else
-		echo "Powered by JANDA"
-	fi
-	rm -f /root/daftarip
-	exit
-fi
-'
+
 #https://github.com/adenvt/OcsPanels/wiki/tutor-debian
 
 clear
@@ -56,7 +44,7 @@ echo "I need to ask some questions before starting setup"
 echo "You can leave the default option and just hit enter if you agree with the option"
 echo ""
 echo "First I need to know the new password of MySQL root user:"
-read -p "Password baru: " -e -i clrkz DatabasePass
+read -p "Password baru: " -e -i JANDA DatabasePass
 echo ""
 echo "Finally, name the Database Name for OCS Panels"
 echo " Please, use one word only, no special characters other than Underscore (_)"
@@ -73,12 +61,12 @@ MYIP2="s/xxxxxxxxx/$MYIP/g";
 
 #detail nama perusahaan
 country=ID
-state=Manila
-locality=Manila
-organization=ByteHAX
-organizationalunit=IT
-commonname=bytehax.blogspot.com
-email=143Clarkz@gmail.com
+state=JATIM
+locality=KEDIRI
+organization=NOTT
+organizationalunit=NETT
+commonname=IPANG
+email=jandabaper09@gmail.com
 
 # go to root
 cd
@@ -91,17 +79,16 @@ sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
 apt-get update;apt-get -y install wget curl;
 
 # set time GMT +7
-ln -fs /usr/share/zoneinfo/Asia/Manila /etc/localtime
+ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 # set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 service ssh restart
 
 # set repo
-wget -O /etc/apt/sources.list "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/sources.list.debian7"
+echo 'deb http://download.webmin.com/download/repository sarge contrib' >> /etc/apt/sources.list.d/webmin.list
 wget "http://www.dotdeb.org/dotdeb.gpg"
 cat dotdeb.gpg | apt-key add -;rm dotdeb.gpg
-sh -c 'echo "deb http://download.webmin.com/download/repository sarge contrib" > /etc/apt/sources.list.d/webmin.list'
 wget -qO - http://www.webmin.com/jcameron-key.asc | apt-key add -
 
 # update
@@ -114,65 +101,57 @@ apt-get -y install nginx
 apt-get -y install nano iptables dnsutils openvpn screen whois ngrep unzip unrar
 
 echo "clear" >> .bashrc
-echo 'echo -e "      # ###       ###                  /"' >> .bashrc
-echo 'echo -e "    /  /###  /     ###               #/"' >> .bashrc
-echo 'echo -e "   /  /  ###/       ##               ##"' >> .bashrc
-echo 'echo -e "  /  ##   ##        ##               ##"' >> .bashrc
-echo 'echo -e " /  ###             ##               ##"' >> .bashrc
-echo 'echo -e "##   ##             ##  ###  /###    ##  /##   ######"' >> .bashrc
-echo 'echo -e "##   ##             ##   ###/ #### / ## / ### /#######"' >> .bashrc
-echo 'echo -e "##   ##             ##    ##   ###/  ##/   / /      ##"' >> .bashrc
-echo 'echo -e "##   ##             ##    ##         ##   /         /"' >> .bashrc
-echo 'echo -e "##   ##             ##    ##         ##  /         /"' >> .bashrc
-echo 'echo -e " ##  ##             ##    ##         ## ##        ###"' >> .bashrc
-echo 'echo -e "  ## #      /       ##    ##         ######        ###"' >> .bashrc
-echo 'echo -e "   ###     /        ##    ##         ##  ###        ###"' >> .bashrc
-echo 'echo -e "    ######/         ### / ###        ##   ### /      ##"' >> .bashrc
-echo 'echo -e "      ###            ##/   ###        ##   ##/       ##"' >> .bashrc
-echo 'echo -e "                                                     /"' >> .bashrc
-echo 'echo -e "                                                    /"' >> .bashrc
-echo 'echo -e "                                                   /"' >> .bashrc
-echo 'echo -e "                                                  /"' >> .bashrc
+echo 'echo -e ""' >> .bashrc
+echo 'echo -e "'####:'########:::::'###::::'##::: ##::'######:::"' >> .bashrc
+echo 'echo -e ". ##:: ##.... ##:::'## ##::: ###:: ##:'##... ##::"' >> .bashrc
+echo 'echo -e ": ##:: ##:::: ##::'##:. ##:: ####: ##: ##:::..:::"' >> .bashrc
+echo 'echo -e ": ##:: ########::'##:::. ##: ## ## ##: ##::'####:"' >> .bashrc
+echo 'echo -e ": ##:: ##.....::: #########: ##. ####: ##::: ##::"' >> .bashrc
+echo 'echo -e ": ##:: ##:::::::: ##.... ##: ##:. ###: ##::: ##::"' >> .bashrc
+echo 'echo -e "'####: ##:::::::: ##:::: ##: ##::. ##:. ######:::"' >> .bashrc
+echo 'echo -e "....::..:::::::::..:::::..::..::::..:::......::::"' >> .bashrc
+echo 'echo -e "			Ipang Nett Nott			"' >> .bashrc
+echo 'echo -e ""' >> .bashrc
 echo 'echo -e "welcome to the server $HOSTNAME" | lolcat' >> .bashrc
-echo 'echo -e "Script mod by Clrkz"' >> .bashrc
-echo 'echo -e "Type menu to display a list of commands"' >> .bashrc
+echo 'echo -e "Script mod by Janda Baper Group" | lolcat' >> .bashrc
+echo 'echo -e "Type menu to display a list of commands" | lopcat' >> .bashrc
 echo 'echo -e ""' >> .bashrc
 
 # install webserver
 cd
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/janda09/autoscripts/master/nginx.conf"
 mkdir -p /home/vps/public_html
 echo "<pre>Setup by Clrkz</pre>" > /home/vps/public_html/index.html
-wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/vps.conf"
+wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/janda09/autoscripts/master/vps.conf"
 service nginx restart
 
 # install openvpn
-wget -O /etc/openvpn/openvpn.tar "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/openvpn-debian.tar"
+wget -O /etc/openvpn/openvpn.tar "https://raw.githubusercontent.com/janda09/autoscripts/master/openvpn-debian.tar"
 cd /etc/openvpn/
 tar xf openvpn.tar
-wget -O /etc/openvpn/1194.conf "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/1194.conf"
+wget -O /etc/openvpn/1194.conf "https://raw.githubusercontent.com/janda09/autoscripts/master/1194.conf"
 service openvpn restart
 sysctl -w net.ipv4.ip_forward=1
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
 iptables -t nat -I POSTROUTING -s 192.168.100.0/24 -o eth0 -j MASQUERADE
 iptables-save > /etc/iptables_yg_baru_dibikin.conf
-wget -O /etc/network/if-up.d/iptables "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/iptables"
+wget -O /etc/network/if-up.d/iptables "https://raw.githubusercontent.com/janda09/autoscripts/master/iptables"
 chmod +x /etc/network/if-up.d/iptables
 service openvpn restart
 
 # konfigurasi openvpn
 cd /etc/openvpn/
-wget -O /etc/openvpn/client.ovpn "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/client-1194.conf"
+wget -O /etc/openvpn/client.ovpn "https://raw.githubusercontent.com/janda09/autoscripts/master/client-1194.conf"
 sed -i $MYIP2 /etc/openvpn/client.ovpn;
 cp client.ovpn /home/vps/public_html/
 
 # install badvpn
 cd
-wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/badvpn-udpgw"
+wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/janda09/autoscripts/master/badvpn-udpgw"
 if [ "$OS" == "x86_64" ]; then
-  wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/badvpn-udpgw64"
+  wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/janda09/autoscripts/master/badvpn-udpgw64"
 fi
 sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300' /etc/rc.local
 chmod +x /usr/bin/badvpn-udpgw
@@ -181,14 +160,13 @@ screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
 # setting port ssh
 cd
 sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
-sed -i '/Port 22/a Port 444' /etc/ssh/sshd_config
 service ssh restart
 
 # install dropbear
 apt-get -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=3128/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 143"/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 110 -p 109 -p 456"/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 service ssh restart
@@ -196,10 +174,10 @@ service dropbear restart
 
 # install squid3
 cd
-apt-get -y install squid3
-wget -O /etc/squid3/squid.conf "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/squid3.conf"
-sed -i $MYIP2 /etc/squid3/squid.conf;
-service squid3 restart
+apt-get -y install squid
+wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/janda09/autoscripts/master/squid3.conf"
+sed -i $MYIP2 /etc/squid/squid.conf;
+service squid restart
 
 # install webmin
 cd
@@ -219,7 +197,7 @@ socket = r:TCP_NODELAY=1
 
 [dropbear]
 accept = 443
-connect = 127.0.0.1:3128
+connect = 127.0.0.1:143
 
 END
 
@@ -243,14 +221,14 @@ service fail2ban restart
 # install ddos deflate
 cd
 apt-get -y install dnsutils dsniff
-wget https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/ddos-deflate-master.zip 
+wget https://raw.githubusercontent.com/janda09/autoscripts/master/ddos-deflate-master.zip 
 unzip ddos-deflate-master.zip
 cd ddos-deflate-master
 ./install.sh
 rm -rf /root/ddos-deflate-master.zip 
 
 # bannerrm /etc/issue.net
-wget -O /etc/issue.net "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/issue.net"
+wget -O /etc/issue.net "https://raw.githubusercontent.com/janda09/autoscripts/master/issue.net"
 sed -i 's@#Banner@Banner@g' /etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 service ssh restart
@@ -258,16 +236,16 @@ service dropbear restart
 
 # download script
 cd /usr/bin
-wget -O menu "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/menu.sh"
-wget -O usernew "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/usernew.sh"
-wget -O trial "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/trial.sh"
-wget -O delete "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/hapus.sh"
-wget -O check "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/user-login.sh"
-wget -O member "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/user-list.sh"
-wget -O restart "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/resvis.sh"
-wget -O speedtest "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/speedtest_cli.py"
-wget -O info "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/info.sh"
-wget -O about "https://raw.githubusercontent.com/Clrkz/VPSAutoScrptz/master/about.sh"
+wget -O menu "https://raw.githubusercontent.com/janda09/autoscripts/master/menu.sh"
+wget -O usernew "https://raw.githubusercontent.com/janda09/autoscripts/master/usernew.sh"
+wget -O trial "https://raw.githubusercontent.com/janda09/autoscripts/master/trial.sh"
+wget -O delete "https://raw.githubusercontent.com/janda09/autoscripts/master/hapus.sh"
+wget -O check "https://raw.githubusercontent.com/janda09/autoscripts/master/user-login.sh"
+wget -O member "https://raw.githubusercontent.com/janda09/autoscripts/master/user-list.sh"
+wget -O restart "https://raw.githubusercontent.com/janda09/autoscripts/master/resvis.sh"
+wget -O speedtest "https://raw.githubusercontent.com/janda09/autoscripts/master/speedtest_cli.py"
+wget -O info "https://raw.githubusercontent.com/janda09/autoscripts/master/info.sh"
+wget -O about "https://raw.githubusercontent.com/janda09/autoscripts/master/about.sh"
 
 echo "0 0 * * * root /sbin/reboot" > /etc/cron.d/reboot
 
@@ -296,12 +274,12 @@ rm -rf ~/.bash_history && history -c
 echo "unset HISTFILE" >> /etc/profile
 
 # install neofetch
-echo "deb http://dl.bintray.com/dawidd6/neofetch jessie main" | tee -a /etc/apt/sources.list
+echo "deb http://dl.bintray.com/dawidd6/neofetch stretch main" | tee -a /etc/apt/sources.list
 curl "https://bintray.com/user/downloadSubjectPublicKey?username=bintray"| apt-key add -
 apt-get update
 apt-get install neofetch
 
-echo "deb http://dl.bintray.com/dawidd6/neofetch jessie main" | tee -a /etc/apt/sources.list
+echo "deb http://dl.bintray.com/dawidd6/neofetch stretch main" | tee -a /etc/apt/sources.list
 curl "https://bintray.com/user/downloadSubjectPublicKey?username=bintray"| apt-key add -
 apt-get update
 apt-get install neofetch
