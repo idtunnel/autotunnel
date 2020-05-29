@@ -1,0 +1,3 @@
+deb http://cdn.debian.net/debian stretch main
+deb http://security.debian.org/ stretch/updates main
+deb http://packages.dotdeb.org stretch all
